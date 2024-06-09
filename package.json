@@ -4,7 +4,10 @@
   "description": "This is final year project of Mca on bihar tourism",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "prisma generate",
+    "build": "prisma generate && npm start",
+    "start": "node index.js"
   },
   "author": "Saumya",
   "license": "ISC",
