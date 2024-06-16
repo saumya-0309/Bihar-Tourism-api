@@ -11,8 +11,8 @@ app.use(cors())
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
 
-app.use('api/user' , userRoute);
-app.use('api/tour' , tourRoute);
+app.use('/api/user' , userRoute);
+app.use('/api/tour' , tourRoute);
 
 app.get('/' , (req , res) => {
     res.json({success:true});

@@ -4,12 +4,12 @@ const { getuser } = require("../utils/jwtAuth");
 const bcrypt = require('bcrypt');
 
 const signup = async (req , res , next) => {
-    const {name , email , password , username , role} = req.body;
+    const {name , email , password , role} = req.body;
     
     var salt = bcrypt.genSaltSync(10);
     var hash = bcrypt.hashSync(password, salt);
 
-    if(!name || !email || !password || !username){
+    if(!name || !email || !password){
         return res.status(400).json({
             success:false,
             error:"please enter all feilds"
@@ -18,7 +18,7 @@ const signup = async (req , res , next) => {
 
     const data = await prisma.user.findUnique({
         where:{
-            username:username
+            email:email,
         }
     })
 
@@ -34,7 +34,6 @@ const signup = async (req , res , next) => {
             name,
             email,
             password:hash,
-            username,
             role
         }
     });
@@ -42,8 +41,8 @@ const signup = async (req , res , next) => {
 }
 
 const loginuser = async (req , res , next) => {
-    const {username , password} = req.body;
-    if(!username || !password){
+    const {email , password} = req.body;
+    if(!email || !password){
         return res.json({
             "success":false,
             "error":"please enter all fields"
@@ -52,7 +51,7 @@ const loginuser = async (req , res , next) => {
 
     const data = await prisma.user.findUnique({
         where:{
-            username:username
+            email:email
         }
     });
 
@@ -73,7 +72,6 @@ const loginuser = async (req , res , next) => {
     }
 
     CookieToken(data , res , next);
-
     next();
 }
 
@@ -83,8 +81,7 @@ const authUser = (req , res , next) => {
     // const token = req.headers.cookie.split('=')[1];
     if(!token) return res.json({success:false , "error":"user is not authourized"});
     const user = getuser(token);
-    req.user = user;
-    next();
+    return res.json({success:true , user});
 }
 
 const authAdmin = (req , res) => {

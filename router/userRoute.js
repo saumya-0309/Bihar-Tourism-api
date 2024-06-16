@@ -3,7 +3,11 @@ const { signup, loginuser, authUser, addadmin } = require("../controllers/userCo
 
 const router = Router();
 
-router.get('/auth' , authUser)
+router.get('/' , (req, res) => {
+    res.status(200).json({success:true});
+})
+
+router.get('/auth' , authUser);
 
 router.post('/signup' , signup , (req , res) => {
     res.status(200).json(res.data);
