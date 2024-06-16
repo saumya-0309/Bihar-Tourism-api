@@ -26,8 +26,9 @@ model User{
 model Tour {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   title String
-  body String
+  description String
   Image String?
+  duration String
   slug String?
   adultCost Int
   ChildCost Int

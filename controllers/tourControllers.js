@@ -72,4 +72,29 @@ const cancelTour = (req, res) => {
     })
 }
 
-module.exports = {bookTour , approvedTour , cancelTour};
+const addTour = async (req , res) => {
+    const {title, description, Image, duration, date , adultCost , ChildCost} = req.body;
+    if(!title ||!description ||!Image ||!duration ||!adultCost ||!ChildCost ||!date) {
+        return res.status(400).json({
+            status: false,
+            message: 'Invalid data , please provide all required fields'
+        })
+    }
+    const authorId = req.user.id;
+    const addTour = await Tour.create({
+        title,
+        description,
+        Image,
+        duration,
+        date,
+        adultCost,
+        ChildCost,
+        authorId
+    });
+    return res.status(200).json({
+        status: true,
+        data: addTour
+    })
+}
+
+module.exports = {bookTour , approvedTour , cancelTour , addTour};
