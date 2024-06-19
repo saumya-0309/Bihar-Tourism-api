@@ -19,5 +19,5 @@ app.get('/' , (req , res) => {
 })
 
 app.listen(port , () => {
-    console.log("app is listen at port 8000");
+    console.log(`app is listen at port http://localhost:8000`);
 })
