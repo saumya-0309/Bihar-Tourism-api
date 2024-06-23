@@ -22,7 +22,7 @@ const bookTour = async (req, res) => {
     })
 }
 
-const approvedTour = (req, res) => {
+const approvedTour = async (req, res) => {
     const {id} = req.body;
     if(!id) {
         return res.status(400).json({
@@ -30,7 +30,7 @@ const approvedTour = (req, res) => {
             message: 'Invalid data , please provide all required fields'
         })
     }
-    Booking.findByIdAndUpdate(id, {status: 'approved'}, {new: true}, (err, data) => {
+    await Booking.findByIdAndUpdate(id, {status: 'approved'}, {new: true}, (err, data) => {
         if(err) {
             return res.status(400).json({
                 status: false,

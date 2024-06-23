@@ -4,7 +4,7 @@ const { getuser } = require("../utils/jwtAuth");
 const bcrypt = require('bcrypt');
 
 const signup = async (req , res , next) => {
-    const {name , email , password , role} = req.body;
+    const {name , email , password } = req.body;
     
     var salt = bcrypt.genSaltSync(10);
     var hash = bcrypt.hashSync(password, salt);
@@ -34,7 +34,6 @@ const signup = async (req , res , next) => {
             name,
             email,
             password:hash,
-            role
         }
     });
     CookieToken(user , res , next);
@@ -84,23 +83,23 @@ const authUser = (req , res , next) => {
     return res.json({success:true , user});
 }
 
-const authAdmin = (req , res) => {
+const authAdmin = (req , res , next) => {
     const token = req.headers.authorization?.split(' ')[1];
     // const token = req.headers.cookie.split('=')[1];
     if(!token) return res.json({success:false , "error":"token is not Valid"});
     const user = getuser(token);
-    if(user.role!== "admin") return res.json({success:false , "error":"user is not admin"});
+    if(user.role !== "ADMIN") return res.json({success:false , "error":"user is not admin"});
     req.user = user;
     next();
 }
 
 const addadmin = async (req, res , next) => { 
-    const {name , email , password , username , addadminPassword} = req.body;
+    const {name , email , password  , addadminPassword} = req.body;
     
     var salt = bcrypt.genSaltSync(10);
     var hash = bcrypt.hashSync(password, salt);
 
-    if(!name || !email || !password || !username){
+    if(!name || !email || !password){
         return res.status(400).json({
             success:false,
             error:"please enter all feilds"
@@ -109,7 +108,7 @@ const addadmin = async (req, res , next) => {
 
     const data = await prisma.user.findUnique({
         where:{
-            username:username
+            email:email
         }
     })
 
@@ -132,7 +131,6 @@ const addadmin = async (req, res , next) => {
             name,
             email,
             password:hash,
-            username,
             role:"ADMIN"
         }
     });

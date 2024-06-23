@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = "mongodb+srv://amit:NfEQxxKCZJcfNfYE@cluster0.jxx4u.mongodb.net/biharTourism?retryWrites=true&w=majority"
+  url = env("DATABASE_URL")
 }
 
 model User{
@@ -48,6 +48,18 @@ model Booking {
   status Status @default(pending)
   date DateTime @default(now())
   cancelReason String @default("")
+  Review String @default("")
+}
+
+model Blogs {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  image String
+  title String
+  body String
+  author String
+  tags String[]
+  slug String
+  date DateTime @default(now())
 }
 
 enum Role {

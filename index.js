@@ -1,6 +1,7 @@
 const express = require('express');
 const userRoute = require('./router/userRoute');
 const tourRoute = require('./router/tourRoute');
+const blogRoute = require('./router/blogRoute');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const port = process.env.PORT || 8000;
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.use('/api/user' , userRoute);
 app.use('/api/tour' , tourRoute);
+app.use('/api/blog' , blogRoute);
 
 app.get('/' , (req , res) => {
     res.json({success:true});
