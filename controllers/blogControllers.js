@@ -2,11 +2,11 @@ const prisma = require("../prisma");
 
 const addBlog = async (req, res) => {
     try {
-        const { title, body, author, tags, image } = req.body;
-        if (!title || !image || !author || !tags || !body) {
+        const { title, body, author, tags, image , city , religion } = req.body;
+        if (!title || !image || !author || !tags || !body || !city || !religion) {
             return res.status(400).json({
-                status: false,
-                message: 'Invalid data, please provide all required fields'
+                success: false,
+                error: 'Invalid data, please provide all required fields'
             })
         }
         let tag = tags.split(",");
@@ -19,7 +19,9 @@ const addBlog = async (req, res) => {
                 body,
                 author,
                 tags: tag,
-                slug
+                slug,
+                city,
+                religion
             }
         });
         return res.status(200).json({
@@ -28,7 +30,7 @@ const addBlog = async (req, res) => {
         })
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ success: false, error: error });
+        return res.status(500).json({ success: false, error: "something went wrong" });
     }
 }
 

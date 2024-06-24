@@ -59,6 +59,8 @@ model Blogs {
   author String
   tags String[]
   slug String
+  city City @default(none)
+  religion Religion @default(none)
   date DateTime @default(now())
 }
 
@@ -72,4 +74,36 @@ enum Status {
   approved
   cancelled
   completed
+}
+
+enum Religion {
+  none
+  hindu
+  sikh
+  buddies
+  jain
+  christian
+  islamic
+}
+
+enum City {
+  none
+  patna
+  gaya
+  jamui
+  banka
+  vaishali
+  champaran
+  samastipur
+  munger
+  buxar
+  darbhanga
+  bhagalpur
+  aurangabad
+  gopalganj
+  saharsa
+  kaimur
+  nawada
+  rohtas
+  lakhisarai
 }
