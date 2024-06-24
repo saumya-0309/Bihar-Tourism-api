@@ -65,4 +65,30 @@ const getBlogBySlug = async (req , res) => {
     }
 }
 
-module.exports = { addBlog , getAllBlog , getBlogBySlug }
+const getBlogByCityOrReligion = async (req, res) => {
+    try {
+        const { city, religion , id } = req.query;
+        const blogs = await prisma.blogs.findMany({
+            where: {
+                OR: [
+                  {
+                    city
+                  },
+                  { religion }
+                ],
+                NOT: {
+                  id
+                },
+              },
+        });
+        return res.status(200).json({
+            success: true,
+            data: blogs
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, error: error });
+    }
+}
+
+module.exports = { addBlog , getAllBlog , getBlogBySlug , getBlogByCityOrReligion}

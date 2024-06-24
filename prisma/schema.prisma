@@ -80,7 +80,7 @@ enum Religion {
   none
   hindu
   sikh
-  buddies
+  buddhist
   jain
   christian
   islamic
@@ -93,7 +93,8 @@ enum City {
   jamui
   banka
   vaishali
-  champaran
+  WestChamparan
+  EastChamparan
   samastipur
   munger
   buxar
@@ -106,4 +107,6 @@ enum City {
   nawada
   rohtas
   lakhisarai
+  bodhgaya
+  nalanda
 }
